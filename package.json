@@ -1,0 +1,23 @@
+{
+  "name": "qaassignment",
+  "version": "1.0.0",
+  "description": "This repo to complete assignment",
+  "main": "index.js",
+  "scripts": {
+    "front-end-test-headed": "npx playwright test --config playwright.config.js --headed",
+    "fron-end-test-headless": "npx playwright test --config playwright.config.js",
+    "api-test": "npx playwright test --config playwrightAPI.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.47.1",
+    "@types/node": "^22.5.4"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.0.0",
+    "dotenv": "^16.4.5",
+    "playwright": "^1.47.1"
+  }
+}

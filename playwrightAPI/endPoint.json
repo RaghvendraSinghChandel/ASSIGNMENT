@@ -1,0 +1,4 @@
+{
+    "object": "objects",
+    "fetchObjectDetail": "/objects?id="
+}
