@@ -16,8 +16,10 @@ class Home {
         this.subTotalAmount = page.locator(`#sc-subtotal-amount-buybox`)
         this.proceedToCheckoutButton = page.locator(`[data-feature-id="proceed-to-checkout-action"]`)
         this.orderSummaryAmount = page.locator(`tbody tr td`).nth(1)
-        this.skipForNow = page.locator(`input[value="SKIP_FOR_NOW"]`)
+        this.skipForNow = page.locator(`[for=kyc-xborder-radio-skip] i`)
         this.continueButton = page.locator(`#kyc-xborder-continue-button`)
+        this.useThisMethod = page.locator(`#orderSummaryPrimaryActionBtn-announce`).locator('..').locator('..').first()
+        this.placeYourAddedOrder = page.getByRole('button', {name: "Place your order in INR"}).first()
         this.selectIndianCurrency = page.locator(`input[value="INR"]`)
         // this.useThisPaymentMethod = page.locator(`#orderSummaryPrimaryActionBtn-announce`)
         this.changeCard = page.locator('##spp-payment-change-coll')
@@ -49,16 +51,6 @@ class Home {
         await this.page.waitForLoadState("domcontentloaded")
         await addCart.waitFor({state:"visible"})
         await this.page.waitForTimeout(3000)
-        const deleteVisible = await deleteAddedItem.first().isVisible()
-        if (deleteVisible) {
-            for (let i=0; i<deleteAddedItem.length; i++) {
-                await deleteAddedItem.nth(i).click()
-                await this.page.waitForTimeout(1000)
-
-            }
-            
-            await expect(deleteAddedItem).not.toBeVisible()
-        }
         await expect(addCart).toBeVisible()
         await addCart.click()
         await itemPrice.waitFor({state:"visible"})
@@ -79,10 +71,10 @@ class Home {
     async checkout_added_item() {
         const proceedCheckout = this.proceedToCheckoutButton
         const orderAmount = this.orderSummaryAmount
-        const skipIdentity = this.skipForNow
+        const skipIdentity = this.skipForNow.locator('..').locator('i').first()
         const continueBtn = this.continueButton
-        const selectCurrency = this.selectIndianCurrency
-        const card = this.changeCard
+        const usePaymentMethod = this.useThisMethod
+        const placeOrder = this.placeYourAddedOrder
         await proceedCheckout.waitFor({state:"visible"})
         await expect(proceedCheckout).toBeVisible()
         await proceedCheckout.click()
@@ -94,10 +86,10 @@ class Home {
         await skipIdentity.click()
         await expect(continueBtn).toBeVisible()
         await continueBtn.click()
-        await expect(selectCurrency).toBeVisible()
-        await selectCurrency.click()
-        await expect(card).toBeVisible()
-        await card.click()
+        await expect(usePaymentMethod).toBeVisible()
+        await usePaymentMethod.click()
+        await expect(placeOrder).toBeVisible()
+        await placeOrder.click()
     }
 
 }
